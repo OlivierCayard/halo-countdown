@@ -14,15 +14,14 @@
 }
 
 
-body {
-  
+body {  
   height: 100%;
   background: radial-gradient(circle at 20% 20%, #e3f2fd 0%, #b1d8ff 40%, #496ab7 100%);
   background-size: 400% 400%;
   animation: aurora 20s ease infinite;
   min-height: 100vh;
   font-family: 'Segoe UI', sans-serif;
-  padding: 100px;
+  padding: 20px;
   color: #1e1e1e;
 }
 
@@ -89,6 +88,8 @@ body {
 }
 
 .app-container {
+  position: relative;
+  bottom: -50px;
   max-width: 450px;
   margin: auto;
   animation: slideDown 0.8s cubic-bezier(0.23, 1, 0.32, 1);
