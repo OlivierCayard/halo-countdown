@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Halo Countdown</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="icon.png" type="image/png">
+</head>
+
+<body>
+  <div class="app-container">
+    <div class="animated-circles-bg"></div>
+    <!-- Header Section -->
+    <header class="glass-card header">
+      <h1 class="welcome-text" id="welcome-text">Welcome, <span id="username">Kaylin</span></h1>
+      <button class="add-button" id="add-event-btn" onclick="window.location.href='add.html'">+</button>
+    </header>
+
+    <!-- Calendar -->
+    <section class="glass-card calendar-section">
+      <div id="calendar-header">
+        <button id="prev-month">‹</button>
+        <h2 id="month-year"></h2>
+        <button id="next-month">›</button>
+      </div>
+      <div id="calendar-days">
+        <!-- Days of the week -->
+        <div class="day-name">Sun</div>
+        <div class="day-name">Mon</div>
+        <div class="day-name">Tue</div>
+        <div class="day-name">Wed</div>
+        <div class="day-name">Thu</div>
+        <div class="day-name">Fri</div>
+        <div class="day-name">Sat</div>
+      </div>
+      <div id="calendar-dates">
+        <!-- Dates will be generated here -->
+      </div>
+    </section>
+    <!-- Selected Date & Events -->
+    <section class="glass-card selected-date-section">
+      <h3 id="selected-date-label">Select a date</h3>
+      <div id="selected-events">
+        <!-- Events will appear here -->
+      </div>
+    </section>
+
+    <!-- Events Section -->
+    <section class="events-section" id="events-section">
+      <!-- Content added dynamically by JS -->
+    </section>
+
+  </div>
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.body.addEventListener("click", () => {
+        if ("Notification" in window && Notification.permission === "default") {
+          Notification.requestPermission().then(permission => {
+            console.log("Notification permission:", permission);
+          });
+        }
+      }, { once: true }); // only ask once on first interaction
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</body>
+
+</html>

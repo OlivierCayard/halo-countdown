@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Event</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <div class="app-container">
+        <section class="glass-card">
+            <h2 style="text-align:center;">Create Countdown</h2>
+            <form id="countdown-form">
+                <label for="title">Event Name</label>
+                <input type="text" id="title" required placeholder="e.g. Birthday" />
+
+                <label for="date">Date</label>
+                <input type="date" id="date" required />
+
+                <label for="time">Time</label>
+                <input type="time" id="time" required />
+
+                <button type="submit" class="add-save-button">Save</button>
+            </form>
+        </section>
+    </div>
+
+    <script>
+        const form = document.getElementById("countdown-form");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const title = document.getElementById("title").value;
+            const date = document.getElementById("date").value;
+            const time = document.getElementById("time").value;
+
+            const eventDate = new Date(`${date}T${time}`);
+            const now = new Date();
+
+            if (eventDate <= now) {
+                alert("Please choose a future date and time.");
+                return;
+            }
+
+            const eventData = {
+                title,
+                date,
+                time,
+                createdAt: new Date().toISOString()
+            };
+
+            let events = JSON.parse(localStorage.getItem("countdowns")) || [];
+            events.push(eventData);
+            localStorage.setItem("countdowns", JSON.stringify(events));
+
+            window.location.href = "index.html";
+        });
+        
+        window.addEventListener("DOMContentLoaded", () => {
+            const dateInput = document.getElementById("date");
+            const timeInput = document.getElementById("time");
+
+            const now = new Date();
+
+            // Set default date to today
+            const today = now.toISOString().split("T")[0];
+            dateInput.value = today;
+
+            // Round current time + 1hr to nearest 5min
+            now.setHours(now.getHours() + 1);
+            now.setMinutes(Math.ceil(now.getMinutes() / 5) * 5);
+            now.setSeconds(0);
+
+            const pad = (n) => n.toString().padStart(2, "0");
+            const formattedTime = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+            timeInput.value = formattedTime;
+        });
+    </script>
+</body>
+
+</html>
