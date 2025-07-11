@@ -3,8 +3,8 @@
   "short_name": "Countdown",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#b1d8ff",
-  "theme_color": "#b1d8ff",
+  "background_color": "##000000",
+  "theme_color": "#000000",
   "icons": [
     {
       "src": "icon.png",
