@@ -89,7 +89,7 @@ body {
 
 .app-container {
   position: relative;
-  bottom: -50px;
+  bottom: -60px;
   max-width: 450px;
   margin: auto;
   animation: slideDown 0.8s cubic-bezier(0.23, 1, 0.32, 1);
