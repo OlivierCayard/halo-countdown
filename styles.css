@@ -18,6 +18,7 @@ html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  background: radial-gradient(circle at 20% 20%, #e3f2fd 0%, #b1d8ff 40%, #496ab7 100%);
 }
 
 
