@@ -4,6 +4,11 @@
   --accent-green: #63cf6c;
   --text-color: #1e1e1e;
   --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+ --bg-pastel-1: #cbbaff;   /* pale butter */
+  --bg-pastel-2: #f6b184;   /* peachy */
+  --bg-pastel-3: #c1d3e1;   /* mint */
+  --bg-pastel-4: #af82e6;
 }
 
 * {
@@ -12,13 +17,18 @@
   box-sizing: border-box;
   font-family: 'Segoe UI', sans-serif;
 }
-
-
+ 
 body {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom, 20px);
   height: 100%;
-  background: radial-gradient(circle at 20% 20%, #e3f2fd 0%, #b1d8ff 40%, #496ab7 100%);
+  background: linear-gradient(135deg,
+      var(--bg-pastel-1),
+      var(--bg-pastel-2),
+      var(--bg-pastel-3),
+      var(--bg-pastel-4));
   background-size: 400% 400%;
-  animation: aurora 20s ease infinite;
+  animation: gradientMove 30s ease infinite;
   min-height: 100vh;
   font-family: 'Segoe UI', sans-serif;
   padding: 20px;
@@ -89,7 +99,7 @@ body {
 
 .app-container {
   position: relative;
-  bottom: -60px;
+  bottom: -50px;
   max-width: 450px;
   margin: auto;
   animation: slideDown 0.8s cubic-bezier(0.23, 1, 0.32, 1);
@@ -236,7 +246,7 @@ body {
   fill: none;
   stroke-dasharray: 339.29;
   /* full circle for r=54 */
-  stroke-dashoffset: 100;
+  stroke-dashoffset: 339.29;
   /* just a visual placeholder */
   transition: stroke-dashoffset 0.5s ease;
 }
@@ -364,6 +374,15 @@ form label {
   cursor: pointer;
   transition: transform 0.2s;
 }
+
+
+.description-section {
+  max-width: 450px;
+  margin: 20px auto 100px;
+  text-align: center;
+  color: #333;
+}
+
 
 /* Position the delete button */
 .delete-button {
