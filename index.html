@@ -5,12 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Halo Countdown">
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <title>Halo Countdown</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="theme-color" content="#ffffff">
+  <link rel="image/icon" href="icon.png">
+  <meta name="theme-color" content="#b1d8ff">
 </head>
 
 <body>
@@ -56,8 +58,21 @@
       <!-- Content added dynamically by JS -->
     </section>
 
+    <section class="glass-card description-section" id="description-section" style="display: none;">
+      <h3>Description</h3>
+      <p id="active-description" style="margin-top: 10px; font-size: 0.95rem; line-height: 1.5;"></p>
+    </section>
+
   </div>
+
+  <script>
+    (function () {
+      emailjs.init('wG03jMNuH9uq_q_pz');
+    })();
+  </script>
+
   <script src="script.js"></script>
+
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       document.body.addEventListener("click", () => {
@@ -69,7 +84,9 @@
       }, { once: true }); // only ask once on first interaction
     });
   </script>
+
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js')
@@ -77,6 +94,10 @@
         .catch(err => console.error('Service Worker registration failed:', err));
     }
   </script>
+
+  <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+
+
 </body>
 
 </html>
