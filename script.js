@@ -13,6 +13,12 @@ if (!username) {
 }
 document.getElementById("username").textContent = username;
 
+let userEmail = localStorage.getItem("userEmail");
+if (!userEmail) {
+    userEmail = prompt("Enter your email:");
+    localStorage.setItem("userEmail", userEmail);
+}
+
 if ("Notification" in window && Notification.permission !== "granted") {
     Notification.requestPermission();
 }
@@ -123,6 +129,21 @@ nextBtn.addEventListener("click", () => {
 
 renderCalendar(currentDate);
 
+function sendEmailReminder(eventTitle, description, userEmail = "example@email.com") {
+    const templateParams = {
+        event_name: eventTitle,
+        description: description,
+        user_email: userEmail
+    };
+
+    emailjs.send("service_uzc1amz", "template_ubd137t", templateParams)
+        .then(function (response) {
+            console.log("✅ Email sent!", response.status, response.text);
+        }, function (error) {
+            console.error("❌ Email failed to send:", error);
+        });
+}
+
 function loadCountdowns() {
     const container = document.getElementById("events-section");
     let events = [];
@@ -167,13 +188,15 @@ function loadCountdowns() {
                     spread: 70,
                     origin: { y: 0.6 }
                 });
-                
+
                 if ("Notification" in window && Notification.permission === "granted") {
                     new Notification("⏰ Countdown Done", {
                         body: `${event.title} has finished.`,
                         icon: "https://cdn-icons-png.flaticon.com/512/1159/1159633.png"
                     });
                 }
+
+                sendEmailReminder(event.title, event.description, userEmail);
 
                 event.notified = true;
                 let allEvents = JSON.parse(localStorage.getItem("countdowns")) || [];
@@ -212,27 +235,43 @@ function loadCountdowns() {
         const card = document.createElement("div");
         card.className = "glass-card event-card";
         card.innerHTML = `
-            <div class="halo-circle" data-index="${index}">
-                <svg class="progress-ring" width="120" height="120">
-                    <circle class="ring-bg" cx="60" cy="60" r="54"/>
-                    <circle class="ring-progress" cx="60" cy="60" r="54"/>                </svg>
-                <div class="inner-circle toggle-text" data-state="name">
-                    <span class="event-text">${event.title}</span>
+            <div class="card-content">
+                <div class="halo-circle" data-index="${index}">
+                    <svg class="progress-ring" width="120" height="120">
+                        <circle class="ring-bg" cx="60" cy="60" r="54"/>
+                        <circle class="ring-progress" cx="60" cy="60" r="54"/>
+                    </svg>
+                    <div class="inner-circle toggle-text" data-state="name">
+                        <span class="event-text">${event.title}</span>
+                    </div>
+                    <button class="delete-button" title="Delete Event">🗑️</button>
                 </div>
-                <button class="delete-button" title="Delete Event">🗑️</button>
-            </div>`;
+            </div>
+        `;
 
         const inner = card.querySelector(".inner-circle");
         inner.addEventListener("click", () => {
+
             const state = inner.getAttribute("data-state");
+            const descriptionSection = document.getElementById("description-section");
+            const activeDescription = document.getElementById("active-description");
+
             if (state === "name") {
                 inner.setAttribute("data-state", "countdown");
                 updateOne(inner, event);
+
+                if (event.description && state === "name") {
+                    descriptionSection.style.display = "block";
+                    activeDescription.textContent = event.description;
+                }
             } else {
                 inner.setAttribute("data-state", "name");
                 inner.querySelector(".event-text").textContent = event.title;
+                descriptionSection.style.display = "none";
+                activeDescription.textContent = "";
             }
         });
+
 
         const deleteBtn = card.querySelector(".delete-button");
         deleteBtn.addEventListener("click", () => {
