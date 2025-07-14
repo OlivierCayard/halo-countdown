@@ -129,7 +129,7 @@ nextBtn.addEventListener("click", () => {
 
 renderCalendar(currentDate);
 
-function sendEmailReminder(eventTitle, description, userEmail = "example@email.com") {
+function sendEmailReminder(eventTitle, description, userEmail) {
     const templateParams = {
         event_name: eventTitle,
         description: description,
